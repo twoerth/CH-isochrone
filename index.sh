@@ -37,6 +37,6 @@ NR > 2 {
     
     # print cells[cell, 1] "," cells[cell, 2] "," eastv "," southv;
     printf("%f\t%f\t%f\t%f\t\"%d\"\t\"%d\"\t%d\tUndirected\n", cells[cell, 1], cells[cell, 2], cells[east, 1], cells[east, 2], cell, east,  eastv);
-    printf("%f\t%f\t%f\t%f\t\"%d\"\t\"%d\"\t%d\tUndirected\n", cells[cell, 1], cells[cell, 2], cells[east, 1], cells[east, 2], cell, south, southv);
+    printf("%f\t%f\t%f\t%f\t\"%d\"\t\"%d\"\t%d\tUndirected\n", cells[cell, 1], cells[cell, 2], cells[south, 1], cells[south, 2], cell, south, southv);
 }'
 
