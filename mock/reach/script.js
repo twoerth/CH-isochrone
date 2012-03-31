@@ -25,7 +25,11 @@ $( function() {
 	
 	$.get('data.json', function( data ) {
 		
-		var max = _.max( data.data, function( edge ) { return indexes( edge, time_index ) } ).weights[ time_index ];
+		var max = _.max(
+		       	data.data,
+		       	function( edge ) {
+			       	return indexes( edge, time_index )
+		       	} ).weights[ time_index ];
 
 		console.info( max );
 		
