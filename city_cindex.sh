@@ -57,6 +57,7 @@ NR > 2 {
 END {
 }' $1 | awk '
 BEGIN {
+    printf("Name,Lat,Lon,CI60,CI50,CI40,CI30,CI20,CI10,Rank,Canton,Name,House2009, House1985, App2009, App1985, Tax2010\n");
     FS=","
     while (getline < "coordinates.csv" > 0) {
         cities_name[$1] = $1;
