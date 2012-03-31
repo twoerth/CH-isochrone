@@ -5,6 +5,12 @@ awk 'BEGIN {
 	#print "Source\tTarget\tWeight\tType"
 	print "{\"data\":["
 }
+
+function floor(x) {
+	y = int(x)
+	return y > x ? y - 1 : y
+}
+
 NR == 2 {
     row=0
 	rows=0;
@@ -42,10 +48,30 @@ NR > 2 {
     #printf("%f\t%f\t%f\t%f\t\"%d\"\t\"%d\"\t%d\tUndirected\n", cells[cell, 1], cells[cell, 2], cells[east, 1], cells[east, 2], cell, east,  eastv);
     #printf("%f\t%f\t%f\t%f\t\"%d\"\t\"%d\"\t%d\tUndirected\n", cells[cell, 1], cells[cell, 2], cells[south, 1], cells[south, 2], cell, south, southv);
     
-    printf("{\"slat\": %f, \"slon\": %f, \"tlat\": %f, \"tlon\": %f, \"weight\": %d},\n", cells[cell, 1], cells[cell, 2], cells[east, 1], cells[east, 2],   eastv);
-    printf("{\"slat\": %f, \"slon\": %f, \"tlat\": %f, \"tlon\": %f, \"weight\": %d}", cells[cell, 1], cells[cell, 2], cells[south, 1], cells[south, 2], southv);
+    #printf("{\"slat\": %f, \"slon\": %f, \"tlat\": %f, \"tlon\": %f, \"weight\": %d},\n", cells[cell, 1], cells[cell, 2], cells[east, 1], cells[east, 2],   eastv);
+    #printf("{\"slat\": %f, \"slon\": %f, \"tlat\": %f, \"tlon\": %f, \"weight\": %d}", cells[cell, 1], cells[cell, 2], cells[south, 1], cells[south, 2], southv);
+
+    for (i = 1; i <=6; i++) {
+        t[i] = 0;
+    }
+    for (i = 2; i < NF; i++) {
+        if (length($i) > 0) {
+            min = floor($i / 10);
+            for (x = 1; x <= min; x++) {
+                t[x]++;
+            }
+        }
+    }
+    printf("{\"ul_lat\": %f, \"ul_lon\": %f, \"lr_lat\": %f, \"lr_lon\": %f, \"weights\": [", cells[cell, 1], cells[cell, 2], cells[cell + 1 + rows, 1], cells[cell + 1 + rows, 2]);
+    for (i = 1; i <=6; i++) {
+        printf("%d", t[i]);
+        if (i < 6) {
+            printf(",");
+        }
+    }
+    printf("]}");
 }
 END {
     print "]}"
-}'
+}' $1
 
