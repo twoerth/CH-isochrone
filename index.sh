@@ -62,7 +62,7 @@ NR > 2 {
             }
         }
     }
-    printf("{\"ul_lat\": %f, \"ul_lon\": %f, \"lr_lat\": %f, \"lr_lon\": %f, \"weights\": [", cells[cell, 1], cells[cell, 2], cells[cell + 1 + rows, 1], cells[cell + 1 + rows, 2]);
+    printf("{\"ul_lat\": %f, \"ul_lon\": %f, \"lr_lat\": %f, \"lr_lon\": %f, \"weights\": [", cells[cell, 1], cells[cell, 2], cells[cell - 1 + rows, 1], cells[cell - 1 + rows, 2]);
     for (i = 1; i <=6; i++) {
         printf("%d", t[i]);
         if (i < 6) {
