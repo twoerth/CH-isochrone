@@ -98,22 +98,24 @@ $( function() {
 		}
 				
 		json['data'].forEach( function( edge ) {
-			edges.push({
-				"type": "Feature",
-				"properties": {
-					'weights': edge['weights']
-				},
-				"geometry": {
-					"type":"Polygon",
-					"coordinates": [[
-						[ edge['ul_lon'], edge['ul_lat'] ],
-						[ edge['lr_lon'], edge['ul_lat'] ],
-						[ edge['lr_lon'], edge['lr_lat'] ],
-						[ edge['ul_lon'], edge['lr_lat'] ],
-						[ edge['ul_lon'], edge['ul_lat'] ]
-					]]
-				}
-			});
+			if( indexes( edge, 0 ) > 0 ) {
+				edges.push({
+					"type": "Feature",
+					"properties": {
+						'weights': edge['weights']
+					},
+					"geometry": {
+						"type":"Polygon",
+						"coordinates": [[
+							[ edge['ul_lon'], edge['ul_lat'] ],
+							[ edge['lr_lon'], edge['ul_lat'] ],
+							[ edge['lr_lon'], edge['lr_lat'] ],
+							[ edge['ul_lon'], edge['lr_lat'] ],
+							[ edge['ul_lon'], edge['ul_lat'] ]
+						]]
+					}
+				});
+			}	
 		});
 		paths['connectivity'].selectAll('path')
 			.data( edges )
