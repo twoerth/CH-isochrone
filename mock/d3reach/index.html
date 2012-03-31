@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Maps JavaScript API v3 Example: Map Simple</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+      <style type="text/css">
+        body {
+          padding-top: 0px;
+        }
+
+  	    #bezirks {
+  	      stroke: #777777;
+  	      stroke-width: 0.8;
+  			  fill-opacity: 0;
+  	    }
+
+  	    #cantons {
+  	      stroke: #000000;
+  	      stroke-width: 1;
+  			  fill-opacity: 0;
+  	    }
+
+  	    #lakes {
+  	      fill: #a5bfdd;
+  	      fill-opacity: 1;
+  	    }
+
+  	    #connectivity {
+  	      fill-opacity: 0.8;
+  	      stroke-width: 0;
+  	      stroke: #777777;
+  	    }
+  	    
+  	    #slider {
+  	      width: 300px;
+  	    }
+
+  	 </style>
+  	 <link type="text/css" rel="stylesheet" href="../colorbrewer.css"/>
+  	 <link rel="stylesheet" href="../jquery.ui.all.css">
+    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../d3.min.js"></script>
+  	<script type="text/javascript" src="../d3.geo.min.js"></script>
+  	<script type="text/javascript" src="../fitProjection.js"></script>
+    <script src="../underscore.js"></script>
+    <script src="../color.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <p>
+    	<label for="amount">Time (10 minutes increments):</label>
+    	<input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" />
+    </p>
+    <div id="slider"></div>
+    <div id="vis"></div>
+  </body>
+</html>
