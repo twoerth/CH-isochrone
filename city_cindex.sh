@@ -52,31 +52,35 @@ NR > 2 {
         }
     }
     
-    printf("%f %f %f %f %d\n", cells[cell, 1], cells[cell, 2], cells[cell - 1 + rows, 1], cells[cell - 1 + rows, 2], t[1]);
+    printf("%f,%f,%f,%f,%d\n", cells[cell, 1], cells[cell, 2], cells[cell - 1 + rows, 1], cells[cell - 1 + rows, 2], t[1]);
 }
 END {
 }' $1 | awk '
 BEGIN {
-    FS=" "
-    while (getline < "cities.csv" > 0) {
-        print cities_lat[$4] = $1  + 0.0;
-        print cities_lon[$4] = $2 + 0.0;
-        print cities_val[$4] = $3 + 0.0;
+    FS=","
+    while (getline < "coordinates.csv" > 0) {
+        cities_name[$1] = $1;
+        cities_lat[$1] = $2 + 0.0;
+        cities_lon[$1] = $3 + 0.0;
+	# print $1 ":" $2 ":"  $3
+    }
+    
+    while (getline < "rating.csv") {
+        ratings[$3] = $0;
     }
 }
 {
-    #print $0
     ul_lat=$1 + 0.0;
     ul_lon=$2 + 0.0;
     lr_lat=$3 + 0.0;
     lr_lon=$4 + 0.0;
     
-    for (city in cities_val) {
+    for (city in cities_name) {
         lat = cities_lat[city];
         lon = cities_lon[city];
-        #print city, ul_lat, cities_lat[city], lr_lat, " | ", ul_lon, lon, lr_lon, (ul_lat >= lat && lr_lat <= lat && ul_lon <= lon), (lr_lon >= lon);
+        # print city, ul_lat, cities_lat[city], lr_lat, " | ", ul_lon, lon, lr_lon, (ul_lat >= lat && lr_lat <= lat && ul_lon <= lon), (lr_lon >= lon);
         if (ul_lat >= lat && lr_lat <= lat && ul_lon <= lon && lr_lon >= lon) {
-            print "Found ", lat, lon, "[", ul_lat, ul_lon, "]", $5, cities_val[city], city; 
+		    printf("\"%s\",%f,%f,%d,%s\n", city, cities_lat[city], cities_lon[city], $5, ratings[city]);
         }
     }
 }'
