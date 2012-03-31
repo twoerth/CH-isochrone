@@ -52,7 +52,7 @@ NR > 2 {
         }
     }
     
-    printf("%f,%f,%f,%f,%d\n", cells[cell, 1], cells[cell, 2], cells[cell - 1 + rows, 1], cells[cell - 1 + rows, 2], t[1]);
+    printf("%f,%f,%f,%f,%d,%d,%d,%d,%d,%d\n", cells[cell, 1], cells[cell, 2], cells[cell - 1 + rows, 1], cells[cell - 1 + rows, 2], t[1], t[2],t[3],t[4],t[5],t[6]);
 }
 END {
 }' $1 | awk '
@@ -80,7 +80,7 @@ BEGIN {
         lon = cities_lon[city];
         # print city, ul_lat, cities_lat[city], lr_lat, " | ", ul_lon, lon, lr_lon, (ul_lat >= lat && lr_lat <= lat && ul_lon <= lon), (lr_lon >= lon);
         if (ul_lat >= lat && lr_lat <= lat && ul_lon <= lon && lr_lon >= lon) {
-		    printf("\"%s\",%f,%f,%d,%s\n", city, cities_lat[city], cities_lon[city], $5, ratings[city]);
+		    printf("\"%s\",%f,%f,%d,%d,%d,%d,%d,%d,%s\n", city, cities_lat[city], cities_lon[city], $5, $6, $7, $8, $9, $10, ratings[city]);
         }
     }
 }'
