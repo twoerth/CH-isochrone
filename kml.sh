@@ -12,6 +12,11 @@ export lng=8.306473
 # export lat=47.500035
 # export lng=8.291903
 
+# Chêne-Bougeries
+export lat=46.198406
+export lng=6.185109
+
+
 awk -v lat=$lat -v lng=$lng '
 BEGIN {
 	FS=",";

@@ -76,12 +76,14 @@ BEGIN {
     lr_lat=$3 + 0.0;
     lr_lon=$4 + 0.0;
     
+    found = 0;
     for (city in cities_name) {
         lat = cities_lat[city];
         lon = cities_lon[city];
         # print city, ul_lat, cities_lat[city], lr_lat, " | ", ul_lon, lon, lr_lon, (ul_lat >= lat && lr_lat <= lat && ul_lon <= lon), (lr_lon >= lon);
         if (ul_lat >= lat && lr_lat <= lat && ul_lon <= lon && lr_lon >= lon) {
 		    printf("\"%s\",%f,%f,%d,%d,%d,%d,%d,%d,%s\n", city, cities_lat[city], cities_lon[city], $5, $6, $7, $8, $9, $10, ratings[city]);
+                    found = 1;
         }
     }
 }'
