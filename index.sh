@@ -6,9 +6,8 @@ awk 'BEGIN {
 	print "{\"data\":["
 }
 
-function floor(x) {
-	y = int(x)
-	return y > x ? y - 1 : y
+function ceil(x) {
+	return (x == int(x)) ? x : int(x)+1
 }
 
 NR == 2 {
@@ -17,7 +16,6 @@ NR == 2 {
     col=0;
     last_lng = 0;
 	for (i = 2; i < NF; i++) {
-		row++;
 		split($i, bb, " ");
 		cells[i, 1] = bb[1];
 		cells[i, 2] = bb[2];
@@ -25,9 +23,10 @@ NR == 2 {
 		cells[i, 4] = bb[4];
 		if (bb[2] != last_lng && last_lng != 0) {
 			rows = row;
-        	row = 0;9917
+        	row = 0;
             col++;
 		}
+		row++;
 		last_lng = bb[2];
     }
 }
@@ -54,14 +53,14 @@ NR > 2 {
     for (i = 1; i <=6; i++) {
         t[i] = 0;
     }
-    for (i = 2; i < NF; i++) {
-        if (length($i) > 0) {
-            min = floor($i / 10);
-            for (x = 1; x <= min; x++) {
-                t[x]++;
-            }
-        }
-    }
+	for (i = 2; i < NF; i++) {
+		if (length($i) > 0) {
+			min = ($i == 0) ? 1 : ceil($i / 10);
+			for (x = 1; x <= min; x++) {
+			    t[x]++;
+			}
+		}
+	}
     printf("{\"ul_lat\": %f, \"ul_lon\": %f, \"lr_lat\": %f, \"lr_lon\": %f, \"weights\": [", cells[cell, 1], cells[cell, 2], cells[cell, 3], cells[cell, 4]);
     for (i = 1; i <=6; i++) {
         printf("%d", t[i]);

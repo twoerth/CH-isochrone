@@ -1,23 +1,48 @@
 #!/bin/bash
 
 # Zurich, Birmensdorfer Str. 150
-# export lat=47.370223
-# export lng=8.51947
+#export lat=47.370223
+#export lng=8.51947
 
 # Baden
-export lat=47.473767 
-export lng=8.306473
+#export lat=47.473767 
+#export lng=8.306473
 
-	# Obersiggenthal
-# export lat=47.500035
-# export lng=8.291903
+# Obersiggenthal
+#export lat=47.500035
+#export lng=8.291903
 
 # Chêne-Bougeries
-export lat=46.198406
-export lng=6.185109
+#export lat=46.198406
+#export lng=6.185109
+
+# Liestal
+lat=47.481606
+lng=7.739573
+
+# La Chaux-de-Fonds
+#lat=47.097872
+#lng=6.821634
+
+# Yverdon
+#lat=46.778520
+#lng=6.641150
+
+# Nyon
+#lat=46.383180
+#lng=6.239550
+
+# Genf
+#lat=46.198392
+#lng=6.142296
+
 
 
 awk -v lat=$lat -v lng=$lng '
+function ceil(x) {
+	return (x == int(x)) ? x : int(x)+1
+}
+
 BEGIN {
 	FS=",";
 	
@@ -56,36 +81,40 @@ BEGIN {
     print "</Placemark>"
 }
 NR == 2 {
-    row=0
+    row=0;
 	rows=0;
     col=0;
     last_lng = 0;
-	for (i = 2; i < NF; i++) {
-		row++;
+	center = 0;
+	for (i = 2; i <= NF; i++) {
 		split($i, bb, " ");
 		cells[i, 1] = bb[1];
 		cells[i, 2] = bb[2];
 		cells[i, 3] = bb[3];
 		cells[i, 4] = bb[4];
-        if ((lat <= bb[1]) && (lat >= bb[3]) && (lng >= bb[2]) && (lng <= bb[4])) {
-			/* found col + row */
-			fcol = col;
-			frow = row;
-        }
 		if (bb[2] != last_lng && last_lng != 0) {
 			rows = row;
         	row = 0;
             col++;
 		}
+        if ((lat <= bb[1]) && (lat >= bb[3]) && (lng >= bb[2]) && (lng <= bb[4])) {
+			/* found col + row */
+			fcol = col;
+			frow = row;
+			center = i;
+			print "<!-- Found " fcol " " frow ", i=" i "-->";
+        }
+		row++;
 		last_lng = bb[2];
     }
 }
 NR > 2 {
 	if ($1 == (fcol " " frow)) {
-		for (i = 2; i < NF; i++) {
+		print "vcenter=" $center;
+		for (i = 2; i <= NF; i++) {
 			if ($i != "") {
 				print "<Placemark>"
-				print "<name>" (i - 1) " (" fcol "x" frow ")</name>"
+				print "<name>" i " (" fcol "x" frow ")</name>"
 				print "<description>" $i "min</description>"
 				if ($i == 0) {
 					print "<styleUrl>#zero</styleUrl>"
